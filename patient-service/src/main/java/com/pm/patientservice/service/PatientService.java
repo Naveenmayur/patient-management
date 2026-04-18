@@ -32,9 +32,7 @@ public class PatientService {
         }
 
         Patient patient = PatientMapper.convertToModel(patientRequestDTO);
-
         Patient savedPatient = patientRepository.save(patient);
-
         return PatientMapper.convertToDTO(savedPatient);
 
     }
@@ -43,12 +41,21 @@ public class PatientService {
         Patient existingPatient = patientRepository.findById(id)
                 .orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + id));
 
+        if(patientRepository.existsByEmailAndIdNot(patientRequestDTO.getEmail(), id)) {
+            throw new EmailAlreadyExistsException("Patient with email " + patientRequestDTO.getEmail() + " already exists.");
+        }
 
-        Patient patient = PatientMapper.convertToModel(patientRequestDTO);
+        existingPatient.setName(patientRequestDTO.getName());
+        existingPatient.setEmail(patientRequestDTO.getEmail());
+        existingPatient.setAddress(patientRequestDTO.getAddress());
+        existingPatient.setDateOfBirth(patientRequestDTO.getDateOfBirth());
 
-        Patient updatedPatient = patientRepository.save(patient);
-
+        Patient updatedPatient = patientRepository.save(existingPatient);
         return PatientMapper.convertToDTO(updatedPatient);
+    }
+
+    public void deletePatient(UUID id) {
+        patientRepository.deleteById(id);
     }
 
 

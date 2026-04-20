@@ -24,4 +24,8 @@ ENTRYPOINT ["java", "-jar", "patient-service-0.0.1-SNAPSHOT.jar"]
 # docker build -t patient-service:latest .
 
 # To run the Docker container, use the following command:
-# docker run -d --name patient-service -p 8081:8081 -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/patient_db patient-service:latest
+# add env variable for billing service to connect to patient service
+# SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/patient_db
+# BILLING_SERVICE_HOST=billing-service
+# BILLING_SERVICE_GRPC_PORT=9001
+# docker run -d --name patient-service -p 8081:8081 -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/patient_db -e BILLING_SERVICE_HOST=billing-service -e BILLING_SERVICE_GRPC_PORT=9001 patient-service:latest

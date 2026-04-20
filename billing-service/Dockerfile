@@ -32,8 +32,8 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 # To build the billing service Docker image, use the following command:
 # docker build --progress=plain -t billing-service:latest .
 
-#Stop billing service container if it's already running
-# docker stop billing-service || true && docker rm billing-service || true
+# Remove billin service Docker container if it exists for windows users:
+# docker rm -f billing-service
 
 # To run the Docker container with grpc and REST endpoints, use the following command:
 # docker run -d --name billing-service -p 8082:8082 -p 9001:9001 billing-service:latest

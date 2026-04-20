@@ -1,0 +1,17 @@
+services:
+  billing-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: billing-service
+    ports:
+      - "8082:8082"  # REST API
+      - "9001:9001"  # gRPC Port
+    # Add database or other environment variables here if needed
+    # environment:
+    #   - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/billing_db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+# To run the services, use the command:
+# docker-compose up --build -d

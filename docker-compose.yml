@@ -42,6 +42,7 @@ services:
       # Connects to Billing Service within the Docker network
       - BILLING_SERVICE_ADDRESS=billing-service
       - BILLING_SERVICE_GRPC_PORT=9001
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     depends_on:
       - billing-service
       - kafka

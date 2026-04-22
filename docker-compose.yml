@@ -82,7 +82,7 @@ services:
       dockerfile: Dockerfile
     container_name: api-gateway
     ports:
-      - "8085:8085"
+      - "8080:8080"
     environment:
       - EUREKA_URI=http://eureka:8761/eureka/
     depends_on:

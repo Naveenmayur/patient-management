@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 8080
 
 spring:
   application:
@@ -10,9 +10,17 @@ spring:
         webflux:
           routes:
             - id: patient-service
-              uri: lb://patient-service
+              uri: lb://PATIENT-SERVICE
               predicates:
                 - Path=/api/patients/**
+
+          #Routes for swagger UI
+            - id: swagger-ui
+              uri: lb://PATIENT-SERVICE
+              predicates:
+                - Path=/api-docs/patients
+              filters:
+                - RewritePath=/api-docs/patients,/v3/api-docs
 
 eureka:
   client:

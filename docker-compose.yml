@@ -120,6 +120,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://auth-server-db:5432/auth_db
       - EUREKA_URI=http://eureka:8761/eureka/
+      - JWT_SECRET=+7FneszQDXWwcp/ifLPI4HBLz/H0Rvfp/LLM3fgru3A=
     depends_on:
       auth-server-db:
         condition: service_healthy

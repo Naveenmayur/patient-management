@@ -1,9 +1,15 @@
 server:
   port: 8080
 
+auth:
+  service:
+    url: http://localhost:8080/api/auth
+
 spring:
   application:
     name: api-gateway
+  main:
+    web-application-type: reactive
   cloud:
     gateway:
       server:
@@ -14,6 +20,11 @@ spring:
               predicates:
                 - Path=/api/patients/**
 
+            - id: auth-service
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/api/auth/**
+
           #Routes for swagger UI
             - id: swagger-ui
               uri: lb://PATIENT-SERVICE
@@ -21,6 +32,22 @@ spring:
                 - Path=/api-docs/patients
               filters:
                 - RewritePath=/api-docs/patients,/v3/api-docs
+
+            - id: auth-service-swagger-ui
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/api-docs/auth
+              filters:
+                - RewritePath=/api-docs/auth,/v3/api-docs
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: patient-service
+        url: /api-docs/patients
+      - name: auth-service
+        url: /api-docs/auth
 
 eureka:
   client:

@@ -3,7 +3,7 @@ server:
 
 auth:
   service:
-    url: http://localhost:8080/api/auth
+    url: http://localhost:8080
 
 spring:
   application:
@@ -24,6 +24,8 @@ spring:
               uri: lb://AUTH-SERVICE
               predicates:
                 - Path=/api/auth/**
+              filters:
+                - JwtValidation
 
           #Routes for swagger UI
             - id: swagger-ui

@@ -1,6 +1,5 @@
 package com.pm.analyticsservice.kafka;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

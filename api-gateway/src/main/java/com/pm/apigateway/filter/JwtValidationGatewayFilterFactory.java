@@ -37,5 +37,4 @@ public class JwtValidationGatewayFilterFactory extends AbstractGatewayFilterFact
         };
     }
 
-
 }

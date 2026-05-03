@@ -1,0 +1,11 @@
+services:
+  eureka:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eureka
+    ports:
+      - "8761:8761"
+
+# To run this service:
+# docker-compose up --build -d

@@ -7,14 +7,36 @@ services:
     ports:
       - "8081:8081"
     environment:
-      # Connects to Postgres on your host machine
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/patient_db
-      # Connects to Billing Service on your host machine
-      - BILLING_SERVICE_ADDRESS=host.docker.internal
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://patient-service-db:5432/patient_db
+      - BILLING_SERVICE_ADDRESS=billing-service
       - BILLING_SERVICE_GRPC_PORT=9001
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - EUREKA_URI=http://eureka:8761/eureka/
+    depends_on:
+      patient-service-db:
+        condition: service_healthy
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  patient-service-db:
+    image: postgres:latest
+    container_name: patient-service-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=patient_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d patient_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - patient-db-data:/var/lib/postgresql
 
-# To run the services, use the command:
+volumes:
+  patient-db-data:
+
+# To run this service:
 # docker-compose up --build -d

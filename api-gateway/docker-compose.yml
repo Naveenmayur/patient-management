@@ -1,16 +1,14 @@
 services:
-  billing-service:
+  api-gateway:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: billing-service
+    container_name: api-gateway
     ports:
-      - "8082:8082"
-      - "9001:9001"
+      - "8080:8080"
     environment:
+      - AUTH_SERVICE_URL=http://auth-service:8084
       - EUREKA_URI=http://eureka:8761/eureka/
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
 # To run this service:
 # docker-compose up --build -d
